@@ -1,15 +1,14 @@
 import { Request, Response } from 'express';
 import fs from 'fs';
-import path from 'path';
 import * as bookService from '../services/bookService';
-import BookModel, { BookInput } from '../models/bookModel';
+import { BookInput } from '../models/bookModel';
 
 export const importBooksFromCSV = async (req: Request, res: Response) => {
   if (!req.file) {
     return res.status(400).json({ message: 'CSV file is required' });
   }
 
-  const filePath = path.resolve(req.file.path);
+  const filePath = req.file.path;
   const books: BookInput[] = [];
   const errorRows: string[] = [];
 
@@ -50,7 +49,7 @@ export const importBooksFromCSV = async (req: Request, res: Response) => {
     }
 
     await bookService.bulkAddBooks(books);
-    fs.unlinkSync(filePath);
+    fs.unlinkSync(filePath); 
 
     res.status(200).json({
       addedBooksCount: books.length,
@@ -60,7 +59,6 @@ export const importBooksFromCSV = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error processing CSV', error: error.message });
   }
 };
-
 
 function normalizeRow(line: string): string[] {
   const values = line.split(',').map(value => value.trim());

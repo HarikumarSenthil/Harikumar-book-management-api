@@ -1,5 +1,6 @@
 import BookModel, { BookInput } from '../models/bookModel';
 
+
 export const bulkAddBooks = async (books: BookInput[]) => {
   return await BookModel.insertMany(books);
 };
