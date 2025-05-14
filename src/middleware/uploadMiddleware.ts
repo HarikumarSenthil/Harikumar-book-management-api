@@ -1,4 +1,4 @@
-
+// middlewares/uploadMiddleware.ts
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
@@ -10,6 +10,7 @@ if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
 
+// Multer storage configuration
 const storage = multer.diskStorage({
   destination: (_, __, cb) => cb(null, UPLOAD_DIR),
   filename: (_, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
