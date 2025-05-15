@@ -16,7 +16,7 @@ app.use(errorHandler);
 connectDB();
 
 // Set up routes
-app.use('/api', bookRoutes);
+app.use('', bookRoutes);
 
 // Start server
 const PORT = config.PORT || 5000;
